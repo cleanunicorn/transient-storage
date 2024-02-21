@@ -1,0 +1,7 @@
+CounterTest:test_Increment() (gas: 6359)
+CounterTest:test_Increment_Multiple() (gas: 8047)
+ReentrancyTest:test_dummy_call() (gas: 15552)
+ReentrancyTest:test_single_call() (gas: 38385)
+UniqueValuesTest:test_sort_array() (gas: 17955)
+UniqueValuesTest:test_unique() (gas: 12409)
+UniqueValuesTest:test_unique_multiple_calls() (gas: 18732)
