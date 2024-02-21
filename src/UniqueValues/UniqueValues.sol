@@ -4,23 +4,26 @@ pragma solidity ^0.8.24;
 contract UniqueValues {
     // Function to return unique values from an array of unsigned integers.
     // It takes an array as input and returns a new array with duplicate values removed.
-    function extractUnique(uint[] calldata input) public returns (uint[] memory) {
-        uint uniqueCount = 0; // Counter to keep track of the number of unique values found.
+    function extractUnique(uint256[] calldata input)
+        public
+        returns (uint256[] memory)
+    {
+        uint256 uniqueCount = 0; // Counter to keep track of the number of unique values found.
 
         // Initialize a new dynamic array in memory to store unique values.
         // Its initial size is the same as the input array, assuming all values could be unique.
-        uint[] memory uniqueValues = new uint[](input.length);
+        uint256[] memory uniqueValues = new uint256[](input.length);
 
         // Iterate over each value in the input array.
-        for (uint i = 0; i < input.length; i++) {
-            uint currentValue = input[i]; // Current value being checked.
+        for (uint256 i = 0; i < input.length; i++) {
+            uint256 currentValue = input[i]; // Current value being checked.
 
             // Use the tload function to check if currentValue has already been marked as seen in Transient Storage.
             // If tload returns 0, it means this value has not been encountered before.
             if (tload(currentValue) == 0) {
                 // Add the currentValue to the uniqueValues array and increment the uniqueCount.
                 uniqueValues[uniqueCount++] = currentValue;
-                
+
                 // Mark this currentValue as seen by storing a 1 in its corresponding location in Transient Storage.
                 tstore(currentValue, 1);
             }
@@ -38,7 +41,7 @@ contract UniqueValues {
     }
 
     // Uses inline assembly to access the Transient Storage's tstore operation.
-    function tstore(uint location, uint value) private {
+    function tstore(uint256 location, uint256 value) private {
         assembly {
             tstore(location, value)
         }
@@ -46,7 +49,7 @@ contract UniqueValues {
 
     // Uses inline assembly to access the Transient Storage's tload operation.
     // Returns the value stored at the given location.
-    function tload(uint location) private returns (uint value) {
+    function tload(uint256 location) private returns (uint256 value) {
         assembly {
             value := tload(location)
         }
